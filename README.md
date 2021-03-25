@@ -1,6 +1,6 @@
 # How to run
 
-Update `gradle.properties` with AI connection string
+Update `gradle.properties` in subprojects with AI connection string
 ```
 aiConnectionString=...
 ```
