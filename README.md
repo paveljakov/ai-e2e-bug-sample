@@ -1,7 +1,5 @@
 # How to run
 
-AI agent is downloaded from maven repo and copied to `build/`
-
 Update `gradle.properties` with AI connection string
 ```
 aiConnectionString=...
