@@ -13,7 +13,7 @@ gradlew bootRun
 
 Run sample gateway app (runs on port 9090)
 ```
-cd ai-examle-app
+cd ai-sample-gateway
 gradlew bootRun
 ```
 
