@@ -1,0 +1,3 @@
+rootProject.name = "ai-example-project"
+include("ai-examle-app")
+include("ai-sample-gateway")

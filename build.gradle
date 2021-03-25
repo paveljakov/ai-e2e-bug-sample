@@ -1,0 +1,6 @@
+description = "Example project"
+
+allprojects {
+    group = 'com.ai.e2e.tx.example'
+	version = '0.0.1-SNAPSHOT'
+}

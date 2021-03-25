@@ -1,1 +1,1 @@
-# ai-e2e-bug-sample
+# How to run

@@ -1,0 +1,48 @@
+import org.apache.tools.ant.filters.ReplaceTokens
+
+plugins {
+	id 'org.springframework.boot' version '2.4.4'
+	id 'java'
+}
+
+group = 'com.ai.e2e.tx.example.gateway'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '11'
+
+repositories {
+	mavenCentral()
+}
+
+configurations {
+	agentlib {
+		transitive = false
+	}
+}
+
+task copyAiAgent(type: Copy) {
+    from("$projectDir/applicationinsights.json") {
+        filter(ReplaceTokens, tokens: [CONNECTION_STRING: project.findProperty('aiConnectionString') ?: ''])
+    }
+	from(configurations.agentlib) {
+		rename { String fileName -> "applicationinsights.jar" }
+	}
+	into buildDir
+}
+compileJava.dependsOn copyAiAgent
+
+bootRun {
+	jvmArgs = [ "-javaagent:$buildDir/applicationinsights.jar" ]
+}
+
+dependencies {
+	agentlib "com.microsoft.azure:applicationinsights-agent:3.0.3-BETA.2"
+
+	implementation 'org.springframework.cloud:spring-cloud-starter-gateway:2.2.6.RELEASE'
+	implementation "org.springframework.cloud:spring-cloud-starter-netflix-hystrix:2.2.6.RELEASE"
+
+	testImplementation 'org.springframework.boot:spring-boot-starter-test:2.3.5.RELEASE'
+}
+
+test {
+	useJUnitPlatform()
+}

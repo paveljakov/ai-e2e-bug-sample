@@ -1,0 +1,69 @@
+{
+  "connectionString": "@CONNECTION_STRING@",
+  "role": {
+    "name": "service"
+  },
+  "customDimensions": {
+    "owner": "${USERNAME}",
+    "service.version": "${APP_VERSION}"
+  },
+  "selfDiagnostics": {
+    "destination": "console",
+    "level": "INFO"
+  },
+  "preview": {
+    "processors": [
+      {
+        "type": "span",
+        "include": {
+          "matchType": "regexp",
+          "attributes": [
+            { "key": "http.method", "value": "" }
+          ],
+          "spanNames": [ "^/" ]
+        },
+        "name": {
+          "toAttributes": {
+            "rules": [ "^(?<tempName>.*)$" ]
+          }
+        }
+      },
+      {
+        "type": "span",
+        "include": {
+          "matchType": "strict",
+          "attributes": [
+            { "key": "tempName" }
+          ]
+        },
+        "name": {
+          "fromAttributes": [ "http.method", "tempName" ],
+          "separator": " "
+        }
+      },
+      {
+        "type": "span",
+        "include": {
+          "matchType": "strict",
+          "spanNames": [ "netty.request" ]
+        },
+        "name": {
+          "fromAttributes": [ "http.method", "http.url" ],
+          "separator": " "
+        }
+      },
+      {
+        "type": "attribute",
+        "include": {
+          "matchType": "strict",
+          "attributes": [
+            { "key": "tempName" }
+          ]
+        },
+        "actions": [
+          { "key": "tempName", "action": "delete" }
+        ]
+      }
+    ]
+  }
+}
