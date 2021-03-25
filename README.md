@@ -23,4 +23,4 @@ curl -v -d "test" http://localhost:9090/example
 curl -v http://localhost:9090/example
 ```
 
-Check AI e2e transaction log, there should be two separate transactions for gateway and service, not a single one how it should be.
+Check AI e2e transaction log, there will be two separate transactions for gateway and service, not a single one how it should be.
